@@ -37,14 +37,14 @@
 #include <linux/miscdevice.h>
 #include <linux/platform_device.h>
 #include <asm/uaccess.h>
-#include <tspdrv.h>
-#include <ImmVibeSPI.c>
+#include "tspdrv.h"
+#include "ImmVibeSPI.c"
 #if defined(VIBE_DEBUG) && defined(VIBE_RECORD)
 #include <tspdrvRecorder.c>
 #endif
 //                                                                                 
 #if !defined(CONFIG_MACH_LGE_L9II_OPEN_EU)
-#include <tspdrv_util.h>
+#include "tspdrv_util.h"
 #include <linux/slab.h>
 
 struct pm8xxx_vib *vib_dev;
@@ -91,9 +91,9 @@ static int g_nMajor = 0;
 
 /* Needs to be included after the global variables because it uses them */
 #ifdef CONFIG_HIGH_RES_TIMERS
-#include <VibeOSKernelLinuxHRTime.c>
+#include "VibeOSKernelLinuxHRTime.c"
 #else
-#include <VibeOSKernelLinuxTime.c>
+#include "VibeOSKernelLinuxTime.c"
 #endif
 
 /* File IO */
@@ -246,6 +246,10 @@ static ssize_t write(struct file *file, const char *buf, size_t count, loff_t *p
         
         /* Check actuator index */
         if (NUM_ACTUATORS <= pInputBuffer->nActuatorIndex)
+
+
+
+
         {
             DbgOut((KERN_ERR "tspdrv: invalid actuator index.\n"));
             i += (SPI_HEADER_SIZE + pInputBuffer->nBufferSize);
